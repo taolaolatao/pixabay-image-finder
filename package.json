@@ -6,6 +6,9 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
+    "gh-pages": "^3.0.0",
+    "material-ui": "^0.20.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
@@ -14,8 +17,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+	 "eject": "react-scripts eject",
+	 "rebuild": "GENERATE_SOURCEMAP=false yarn run build",
+	 "deploy": "GENERATE_SOURCEMAP=false yarn run build && gh-pages -d build"
   },
+  "homepage": "https://taolaolatao.github.io/pixabay-image-finder",
   "eslintConfig": {
     "extends": "react-app"
   },
