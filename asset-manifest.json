@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.js": "/pixabay-image-finder/static/js/main.2add0537.chunk.js",
+    "runtime-main.js": "/pixabay-image-finder/static/js/runtime-main.79aebe55.js",
+    "static/js/2.5923a818.chunk.js": "/pixabay-image-finder/static/js/2.5923a818.chunk.js",
+    "index.html": "/pixabay-image-finder/index.html",
+    "precache-manifest.9aa38f8405ac60d528da8528c28c1204.js": "/pixabay-image-finder/precache-manifest.9aa38f8405ac60d528da8528c28c1204.js",
+    "service-worker.js": "/pixabay-image-finder/service-worker.js",
+    "static/js/2.5923a818.chunk.js.LICENSE.txt": "/pixabay-image-finder/static/js/2.5923a818.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.79aebe55.js",
+    "static/js/2.5923a818.chunk.js",
+    "static/js/main.2add0537.chunk.js"
+  ]
+}
