@@ -4,26 +4,29 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
 import ImageResults from '../ImageResults/ImageResults';
+import VideoResults from '../VideoResults/VideoResults';
 import { api } from '../../api';
 
 class Search extends React.Component {
 	state = {
 		keyword: '',
+		selectType: 'image',
 		amount: 10,
-		images: []
+		images: [],
+		videos: []
 	}
 
-	onChangeKeyWord = e => {
-		this.setState({ [e.target.name]: e.target.value }, async () => {
+	searchImage = async e => {
+		if(e.which === 13){
 			const { keyword, amount } = this.state;
-
+			
 			try {
 				const results = await api.get('/', { 
 					params: { 
 						q: keyword, 
 						per_page: amount,
 						image_type: 'photo', 
-						key: '16881353-7698db3408afc2db4d639fb05'
+						key: api.defaults.params.key
 					} 
 				});
 	
@@ -31,24 +34,78 @@ class Search extends React.Component {
 			} catch (error) {
 				console.error(error);
 			}
-		})
+		}
+	}
+
+	searchVideo = async e => {
+		if(e.which === 13){
+			const { keyword, amount } = this.state;
+			var url = new URL('https://pixabay.com/api/videos/');
+
+			try {
+				var params = {
+					q: keyword, 
+					per_page: amount, 
+					video_type: 'all', // animation
+					key: api.defaults.params.key
+				}
+				url.search = new URLSearchParams(params).toString();
+				
+				const results = await fetch(url);
+				const response = await results.json();
+				this.setState({ videos: response.hits });
+			} catch (error) {
+				console.error(error);
+			}
+		}
+	}
+
+	onChangeKeyWord = e => {
+		this.setState({ [e.target.name]: e.target.value });
 	}
 
 	onChangeAmount = (_, index, value) => {
 		this.setState({ amount: value });
 	}
 
+	onChangeSelectType = (_, index, value) => {
+		this.setState({ videos: [], images: [] });
+		this.setState({ keyword: '' });
+		this.setState({ selectType: value });
+	}
+
 	render() {
-		const { keyword, amount, images } = this.state
+		const { keyword, amount, images, videos, selectType } = this.state
 		return (
 			<div>
-				<TextField 
-					name="keyword"
-					value={keyword}
-					fullWidth={true}
-					floatingLabelText="Search For Images"
-					onChange={this.onChangeKeyWord}
-				/>
+				{selectType === 'image' ? (
+					<TextField 
+						name="keyword"
+						value={keyword}
+						fullWidth={true}
+						floatingLabelText="Search For Images"
+						onChange={this.onChangeKeyWord}
+						onKeyPress={this.searchImage}
+					/>
+				) : (
+					<TextField 
+						name="keyword"
+						value={keyword}
+						fullWidth={true}
+						floatingLabelText="Search For Videos"
+						onChange={this.onChangeKeyWord}
+						onKeyPress={this.searchVideo}
+					/>
+				)}				
+				<SelectField
+					name="searchType"
+					floatingLabelText="Search Type"
+					value={selectType}
+					onChange={this.onChangeSelectType}
+				>
+					<MenuItem value="image" primaryText="Image" />
+					<MenuItem value="video" primaryText="Video" />
+				</SelectField>
 				<br />
 				<SelectField
 					name="amount"
@@ -64,6 +121,7 @@ class Search extends React.Component {
 				</SelectField>
 				<br />
 				{images.length ? <ImageResults images={images} /> : null}
+				{videos.length ? <VideoResults videos={videos} /> : null}
 			</div>
 		);
 	}

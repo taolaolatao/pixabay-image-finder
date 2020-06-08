@@ -18,8 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
 	 "eject": "react-scripts eject",
-	 "rebuild": "GENERATE_SOURCEMAP=false yarn run build",
-	 "deploy": "GENERATE_SOURCEMAP=false yarn run build && gh-pages -d build"
+	 "rebuild": "GENERATE_SOURCEMAP=false yarn build",
+	 "deploy": "GENERATE_SOURCEMAP=false yarn build && gh-pages -d build"
   },
   "homepage": "https://taolaolatao.github.io/pixabay-image-finder",
   "eslintConfig": {
